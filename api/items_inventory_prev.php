@@ -34,7 +34,20 @@
         
       }
 			
-			$result=$mysqli->query("SELECT * FROM items_table WHERE delete_status=0")or die ($mysqli->error);
+			$result=$mysqli->query("SELECT i.item_id,
+      i.item_name,
+      el.employee_lname,
+      COALESCE(SUM(CASE WHEN ilt.logs_status_id = 1 THEN ilt.item_quantity ELSE 0 END), 0) AS Total_added,
+      COALESCE(SUM(CASE WHEN ilt.logs_status_id = 2 THEN ilt.item_quantity ELSE 0 END), 0) AS Total_deleted,
+      COALESCE(SUM(CASE WHEN ilt.logs_status_id = 3 THEN ilt.item_quantity ELSE 0 END), 0) AS Total_released,
+      (COALESCE(SUM(CASE WHEN ilt.logs_status_id = 1 THEN ilt.item_quantity ELSE 0 END), 0)
+       - COALESCE(SUM(CASE WHEN ilt.logs_status_id = 2 THEN ilt.item_quantity ELSE 0 END), 0) 
+       - COALESCE(SUM(CASE WHEN ilt.logs_status_id = 3 THEN ilt.item_quantity ELSE 0 END), 0)) AS Total_quantity
+      FROM items_table i
+      INNER JOIN employee_list el ON i.employee_id = el.employee_id
+      LEFT JOIN item_logs_timestamp ilt ON i.item_id = ilt.item_id
+      WHERE i.delete_status = 0
+      GROUP BY i.item_id, i.item_name, el.employee_lname")or die ($mysqli->error);
 			//mo gana ang search pag 4 or multiple fields and iyang e search, below 4 fields dli mo ganah ang multiple field search
       //ang pagination kay dli mo ganah basta subra ra ang special characters in a certain fields
 		?>
@@ -43,16 +56,16 @@
 
         <h3><i class="fa fa-angle-right"></i> Items Preview</h3>
        
-            <div class="col-sm-6">
-        <input type="text" class="form-control" id="searchInput" placeholder="Search by for vehicle type...">
-    </div>
-
+      
  <table id="hidden-table-info" class="table datatable">
                 <thead>
                   <tr>
                     <th>Item ID</th>
                     <th>Item Name</th>
-                    <th>Item Total Quantity</th>
+                    <th>Total Added</th>
+                    <th>Total Released</th>
+                    <th>Total Deleted</th>
+                    <th>Total Remaining Quantity</th>
                     <th>Employee ID</th>
 				        	<th colspan="2">Option</th>					
                   </tr>
@@ -65,8 +78,11 @@
                   <tr class="gradeA">
                    <td><?php echo $row['item_id'];?></td>
 				          	<td><?php echo $row['item_name'];?></td>
-                    <td><?php echo $row['item_create_timestamp'];?></td>
-                    <td><?php echo $row['employee_id'];?></td>
+                    <td><?php echo $row['Total_added'];?></td>
+                    <td><?php echo $row['Total_deleted'];?></td>
+                    <td><?php echo $row['Total_released'];?></td>
+                    <td><?php echo $row['Total_quantity'];?></td>
+                    <td><?php echo $row['employee_lname'];?></td>
 
 					            <td><button type="button" class="btn btn-round btn-success"  onclick="editData(<?php echo $row['item_id']; ?>, 
                       '<?php echo $row['item_name']; ?>')">Edit</button>
@@ -89,32 +105,7 @@
     $('#hidden-table-info').DataTable();
   });
 </script>
-        <script>
-    function filterTable() {
-        // Declare variables
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("hidden-table-info");
-        tr = table.getElementsByTagName("tr");
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1]; // Change index to the appropriate column
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    // Attach an event listener to the search input
-    document.getElementById("searchInput").addEventListener("input", filterTable);
-</script>
+       
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 

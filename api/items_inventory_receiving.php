@@ -14,24 +14,13 @@
           $db_delete->delete_item($delete_item_id);
          
         }
-        if (isset($_POST['btn_edit'])){
-          $db_manager=new edit_data();
-          $edit_item_id=$_POST['edit_item_id'];
-          $edit_item_name=$_POST['edit_item_name'];
+        if (isset($_POST['btn_add'])){
+          $employee_id = $_SESSION['employee_id'];
+          $add_item_id=$_POST['add_item_id'];
+          $add_quantity=$_POST['add_quantity'];
 
-          $item_check = $mysqli->query("SELECT item_id FROM items_table WHERE item_name = '$edit_item_name'") or die($mysqli->error);
-
-          if ($item_check->num_rows > 0) {
-            
-            $error_message = "Error: The Item is already registered.";
-            }else{
-            
-             
-              $db_manager->edit_item($edit_item_id,$edit_item_name);
-         
-              
-          }
-        
+          $mysqli->query("INSERT INTO item_logs_timestamp(item_id,item_quantity,logs_status_id,employee_id) VALUES('$add_item_id','$add_quantity',1,'$employee_id')") or die ($mysqli->error);
+          echo '<script>alert("Quantity recorded successfully");</script>';
       }
 			
 			$result=$mysqli->query("SELECT i.logs_timestamp_id,
@@ -43,18 +32,24 @@
     FROM item_logs_timestamp i
     INNER JOIN items_table it ON it.item_id=i.item_id
     INNER JOIN employee_list el on el.employee_id=i.employee_id
-    INNER JOIN logs_status ls ON ls.log_status_id=i.logs_status_id")or die ($mysqli->error);
+    INNER JOIN logs_status ls ON ls.log_status_id=i.logs_status_id
+    ORDER BY i.logs_timestamp DESC")or die ($mysqli->error);
+    
+   
 			//mo gana ang search pag 4 or multiple fields and iyang e search, below 4 fields dli mo ganah ang multiple field search
       //ang pagination kay dli mo ganah basta subra ra ang special characters in a certain fields
+      $item_result=$mysqli->query("SELECT item_id, item_name FROM items_table WHERE delete_status=0")
 		?>
 		
 
 
         <h3><i class="fa fa-angle-right"></i> Items Preview</h3>
        
-            <div class="col-sm-6">
-        <input type="text" class="form-control" id="searchInput" placeholder="Search by for vehicle type...">
-    </div>
+                      <button type="button" class="btn btn-round btn-success" id="myBtn">Add Quantity
+                      </button>   
+                    
+                      
+		
 
  <table id="hidden-table-info" class="table datatable">
                 <thead>
@@ -65,7 +60,7 @@
                     <th>Log status</th>
                     <th>Log Timestamp</th>
                     <th>Employee Name</th>
-				        	<th colspan="2">Option</th>					
+				        		
                   </tr>
                 </thead>
 				
@@ -81,40 +76,15 @@
                     <td><?php echo $row['logs_timestamp'];?></td>
                     <td><?php echo $row['employee_lname'];?></td>
 
-					            <td><button type="button" class="btn btn-round btn-success"  onclick="editData(<?php echo $row['logs_timestamp_id']; ?>, 
-                      '<?php echo $row['item_name']; ?>')">Add Quantity</button>
-                      </td>
-		
+                  
 					
                   </tr>
                   <?php endwhile; ?>
 				  			  
                 </tbody>
               </table>
-         
-		 <!-- Modal Dialog Scrollable -->
-     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
-                Modal Dialog Scrollable
-              </button>
-              <div class="modal fade" id="modalDialogScrollable" tabindex="-1">
-                <div class="modal-dialog modal-dialog-scrollable">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Modal Dialog Scrollable</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                      Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
-                      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-                      This content should appear at the bottom after you scroll.
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                  </div>
-                </div>
-              </div><!-- End Modal Dialog Scrollable-->
+                    
+	
 
      <!--script for search -->
      <script>
@@ -122,32 +92,7 @@
     $('#hidden-table-info').DataTable();
   });
 </script>
-        <script>
-    function filterTable() {
-        // Declare variables
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById("searchInput");
-        filter = input.value.toUpperCase();
-        table = document.getElementById("hidden-table-info");
-        tr = table.getElementsByTagName("tr");
-
-        // Loop through all table rows, and hide those who don't match the search query
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[1]; // Change index to the appropriate column
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-
-    // Attach an event listener to the search input
-    document.getElementById("searchInput").addEventListener("input", filterTable);
-</script>
+      
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
@@ -172,16 +117,24 @@
         <div class="card">
         <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Item Registration</h5>
+              <h5 class="card-title">Adding Quantity</h5>
 
               <!-- Floating Labels Form -->
-              <form class="row g-3" method="post" action="index_Admin.php?page=items_prev" id="employeeForm">
-              <input type="text" class="form-control" name="edit_item_id" id="edit_item_id" readonly><br>
+              <form class="row g-3" method="post" action="index_admin.php?page=items_receiving" id="employeeForm" onsubmit="return confirmAdd();">
+             
                 <div class="col-md-12">
                   <div class="form-floating">
-                 
-                    <input type="text" class="form-control" id="edit_item_name" name="edit_item_name" placeholder="Your Name" required>
-                    <label for="floatingName">Item Name</label>
+                            
+                              <select class="form-control select2" name="add_item_id" id="add_item_id" required>
+                          <option value="">-- Please Select Item Name --</option>
+                          
+                    <?php
+                    while ($item_row=$item_result->fetch_assoc()):	
+                    ?>
+                        <option value="<?php echo $item_row['item_id'];?>">
+                        <?php echo $item_row['item_name'];?></option>
+                        <?php endwhile; ?>
+						</select>
                   </div>
                 </div>
                 <div class="col-md-12">
@@ -194,8 +147,8 @@
                
              
                 <div class="text-center">
-                  <button name="btn_edit" type="submit" class="btn btn-primary">Update</button>
-                  <button type="reset" class="btn btn-secondary">Reset</button>
+                  <button name="btn_add" type="submit" class="btn btn-primary">ADD</button>
+                  
                 </div>
               </form><!-- End floating Labels Form -->
             </div>
@@ -214,8 +167,16 @@
         </div>
     </div>
 </div>
+
+</script>
+        <!-- /row -->
+        <script>
+  function confirmAdd() {
+    return confirm("Are you sure you want to add this quantity?");
+  }
+</script>
 <script src="./assets/js/modal.js"></script>
 <script src="./assets/js/edit_item.js"></script>
 
 
- 
+

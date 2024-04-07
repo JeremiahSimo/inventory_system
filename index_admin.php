@@ -459,10 +459,16 @@ $mysqli->close();
             </a>
           </li>
           <li>
+            <a href="index_admin.php?page=items_releasing" class="<?php echo ($_GET['page'] ?? '') === 'items_releasing'  ? 'active' : ''; ?>">
+              <i class="bi bi-circle"></i><span>Items Releasing</span>
+            </a>
+          </li>
+          <li>
             <a href="index_admin.php?page=items_reg" class="<?php echo ($_GET['page'] ?? '') === 'items_reg'  ? 'active' : ''; ?>">
               <i class="bi bi-circle"></i><span>Items Registration</span>
             </a>
           </li>
+         
         </ul>
       </li><!-- End Charts Nav -->
 
@@ -585,6 +591,9 @@ $mysqli->close();
                       case 'items_receiving':
                         include 'api/items_inventory_receiving.php';
                         break;
+                        case 'items_releasing':
+                          include 'api/items_inventory_releasing.php';
+                          break;
              
             }
           }
