@@ -89,15 +89,41 @@
 					 <form method="post" action="index_admin.php?page=items_prev" onsubmit="return confirmDelete();">
           <input type="hidden" name="delete_item_id" id="delete_item_id" value="<?php echo $row['item_id']; ?>">
 						<button type="submit" name="btn_delete" class="btn btn-danger"  >Delete</button>
+            <button type="button" class="btn btn-primary" id="myBtn">
+                Details
+              </button>
 					</form>
-          <button name="btn_show" type="submit" class="btn btn-primary">Details</button>
+        
 					</td>
                   </tr>
                   <?php endwhile; ?>
 				  			  
                 </tbody>
               </table>
-         
+
+
+       <!-- Modal Dialog Scrollable -->
+       
+              <div class="modal" id="modalDialogScrollable">
+                <div class="modal-dialog modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Modal Dialog Scrollable</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Non omnis incidunt qui sed occaecati magni asperiores est mollitia. Soluta at et reprehenderit. Placeat autem numquam et fuga numquam. Tempora in facere consequatur sit dolor ipsum. Consequatur nemo amet incidunt est facilis. Dolorem neque recusandae quo sit molestias sint dignissimos.
+                      <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                      This content should appear at the bottom after you scroll.
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Modal Dialog Scrollable-->
+     
 		
      <!--script for search -->
      <script>

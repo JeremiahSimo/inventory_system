@@ -23,9 +23,10 @@
           echo '<script>alert("Quantity recorded successfully");</script>';
       }
 			
-			$result=$mysqli->query("SELECT i.logs_timestamp_id,
+      $result=$mysqli->query("SELECT i.logs_timestamp_id,
       i.logs_timestamp,
         it.item_name,
+        i.item_serial_number,
         ls.log_status_name,
         i.item_quantity,
         el.employee_lname
@@ -33,7 +34,7 @@
     INNER JOIN items_table it ON it.item_id=i.item_id
     INNER JOIN employee_list el on el.employee_id=i.employee_id
     INNER JOIN logs_status ls ON ls.log_status_id=i.logs_status_id
-    ORDER BY i.logs_timestamp DESC")or die ($mysqli->error);
+    ORDER BY i.logs_timestamp ASC")or die ($mysqli->error);
     
    
 			//mo gana ang search pag 4 or multiple fields and iyang e search, below 4 fields dli mo ganah ang multiple field search
@@ -45,8 +46,8 @@
 
         <h3><i class="fa fa-angle-right"></i> Items Preview</h3>
        
-                      <button type="button" class="btn btn-round btn-success" id="myBtn">Add Quantity
-                      </button>   
+                      <!-- <button type="button" class="btn btn-round btn-success" id="myBtn">Add Quantity
+                      </button>    -->
                     
                       
 		
@@ -60,6 +61,7 @@
                     <th>Log status</th>
                     <th>Log Timestamp</th>
                     <th>Employee Name</th>
+                    <th>Options</th>
 				        		
                   </tr>
                 </thead>
@@ -75,7 +77,9 @@
                     <td><?php echo $row['log_status_name'];?></td>
                     <td><?php echo $row['logs_timestamp'];?></td>
                     <td><?php echo $row['employee_lname'];?></td>
-
+                    <td>
+                      <button type="button" class="btn btn-round btn-success">Release</button>
+                    </td>
                   
 					
                   </tr>

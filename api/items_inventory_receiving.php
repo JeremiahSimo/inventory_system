@@ -17,22 +17,26 @@
         if (isset($_POST['btn_add'])){
           $employee_id = $_SESSION['employee_id'];
           $add_item_id=$_POST['add_item_id'];
+          $add_serial_number=$_POST['add_serial_number'];
           $add_quantity=$_POST['add_quantity'];
 
-          $mysqli->query("INSERT INTO item_logs_timestamp(item_id,item_quantity,logs_status_id,employee_id) VALUES('$add_item_id','$add_quantity',1,'$employee_id')") or die ($mysqli->error);
+          $mysqli->query("INSERT INTO item_logs_timestamp(item_id,item_quantity,logs_status_id,employee_id,item_serial_number) VALUES('$add_item_id','$add_quantity',1,'$employee_id','$add_serial_number')") or die ($mysqli->error);
           echo '<script>alert("Quantity recorded successfully");</script>';
       }
 			
 			$result=$mysqli->query("SELECT i.logs_timestamp_id,
       i.logs_timestamp,
         it.item_name,
+        i.item_serial_number,
         ls.log_status_name,
         i.item_quantity,
-        el.employee_lname
+        el.employee_lname,
+        el.employee_fname
     FROM item_logs_timestamp i
     INNER JOIN items_table it ON it.item_id=i.item_id
     INNER JOIN employee_list el on el.employee_id=i.employee_id
     INNER JOIN logs_status ls ON ls.log_status_id=i.logs_status_id
+    WHERE i.logs_status_id=1
     ORDER BY i.logs_timestamp DESC")or die ($mysqli->error);
     
    
@@ -43,7 +47,7 @@
 		
 
 
-        <h3><i class="fa fa-angle-right"></i> Items Preview</h3>
+        <h3><i class="fa fa-angle-right"></i> Items Receiving</h3>
        
                       <button type="button" class="btn btn-round btn-success" id="myBtn">Add Quantity
                       </button>   
@@ -56,10 +60,11 @@
                   <tr>
                     <th>Log ID</th>
                     <th>Item name</th>
+                    <th>Serial Number</th>
                     <th>Total Quantity</th>
                     <th>Log status</th>
                     <th>Log Timestamp</th>
-                    <th>Employee Name</th>
+                    <th>Received by</th>
 				        		
                   </tr>
                 </thead>
@@ -71,10 +76,11 @@
                   <tr class="gradeA">
                    <td><?php echo $row['logs_timestamp_id'];?></td>
 				          	<td><?php echo $row['item_name'];?></td>
+                    <td><?php echo $row['item_serial_number'];?></td>
                     <td><?php echo $row['item_quantity'];?></td>
                     <td><?php echo $row['log_status_name'];?></td>
                     <td><?php echo $row['logs_timestamp'];?></td>
-                    <td><?php echo $row['employee_lname'];?></td>
+                    <td><?php echo $row['employee_lname'].', '. $row['employee_fname'];?></td>
 
                   
 					
@@ -135,6 +141,13 @@
                         <?php echo $item_row['item_name'];?></option>
                         <?php endwhile; ?>
 						</select>
+                  </div>
+                </div>
+                <div class="col-md-12">
+                  <div class="form-floating">
+                 
+                    <input type="text" class="form-control" id="add_serial_number" name="add_serial_number" placeholder="Your Name" required>
+                    <label for="floatingName">Serial Number</label>
                   </div>
                 </div>
                 <div class="col-md-12">

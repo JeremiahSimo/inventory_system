@@ -318,7 +318,7 @@ $mysqli->close();
         </a>
       </li><!-- End Dashboard Nav -->
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-menu-button-wide"></i><span>Components</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -394,9 +394,9 @@ $mysqli->close();
             </a>
           </li>
         </ul>
-      </li><!-- End Components Nav -->
+      </li>End Components Nav -->
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class="bi bi-journal-text"></i><span>Forms</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -422,12 +422,12 @@ $mysqli->close();
             </a>
           </li>
         </ul>
-      </li><!-- End Forms Nav -->
+      </li>End Forms Nav -->
 
      
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#violation-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-layout-text-window-reverse"></i><span>Employee</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-briefcase"></i><span>Employee</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="violation-nav" class="nav-content collapse <?php echo ($_GET['page'] ?? '') === 'employee_prev' || ($_GET['page'] ?? '') === 'employee_reg' ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
           <li>
@@ -445,9 +445,9 @@ $mysqli->close();
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class="bi bi-bar-chart"></i><span>Inventory</span><i class="bi bi-chevron-down ms-auto"></i>
+          <i class="bi bi-archive"></i><span>Item Inventory</span><i class="bi bi-chevron-down ms-auto"></i>
         </a>
-        <ul id="charts-nav" class="nav-content collapse <?php echo ($_GET['page'] ?? '') ==='items_prev' || ($_GET['page'] ?? '') ==='items_receiving' || ($_GET['page'] ?? '') ==='items_reg' ? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
+        <ul id="charts-nav" class="nav-content collapse <?php echo ($_GET['page'] ?? '') ==='items_prev' || ($_GET['page'] ?? '') ==='items_receiving' || ($_GET['page'] ?? '') ==='items_reg'|| ($_GET['page'] ?? '') ==='items_releasing' || ($_GET['page'] ?? '') ==='items_reports'? 'show' : ''; ?>" data-bs-parent="#sidebar-nav">
           <li>
             <a href="index_admin.php?page=items_prev" class="<?php echo ($_GET['page'] ?? '') === 'items_prev'  ? 'active' : ''; ?>">
               <i class="bi bi-circle"></i><span>Items Preview</span>
@@ -466,6 +466,11 @@ $mysqli->close();
           <li>
             <a href="index_admin.php?page=items_reg" class="<?php echo ($_GET['page'] ?? '') === 'items_reg'  ? 'active' : ''; ?>">
               <i class="bi bi-circle"></i><span>Items Registration</span>
+            </a>
+          </li>
+          <li>
+            <a href="index_admin.php?page=items_reports" class="<?php echo ($_GET['page'] ?? '') === 'items_reports'  ? 'active' : ''; ?>">
+              <i class="bi bi-circle"></i><span>Items Reports</span>
             </a>
           </li>
          
@@ -594,6 +599,9 @@ $mysqli->close();
                         case 'items_releasing':
                           include 'api/items_inventory_releasing.php';
                           break;
+                          case 'items_reports':
+                            include 'api/items_reports.php';
+                            break;
              
             }
           }
