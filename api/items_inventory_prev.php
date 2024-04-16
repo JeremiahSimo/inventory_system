@@ -1,38 +1,35 @@
 
-	   
-	  <?php
+<?php
 				include './include/connection.php';
         include './class/edit.php';
         include './class/delete.php';
-
-
-       
 
         if (isset($_POST['btn_delete'])){
           $db_delete=new soft_delete();
           $delete_item_id=$_POST['delete_item_id'];
           $db_delete->delete_item($delete_item_id);
-         
         }
-        if (isset($_POST['btn_edit'])){
-          $db_manager=new edit_data();
-          $edit_item_id=$_POST['edit_item_id'];
-          $edit_item_name=$_POST['edit_item_name'];
+      //   if (isset($_POST['btn_edit'])){
+      //     $db_manager=new edit_data();
+      //     $edit_item_id=$_POST['edit_item_id'];
+      //     $edit_item_name=$_POST['edit_item_name'];
+          
+      //     $item_check = $mysqli->query("SELECT item_id FROM items_table WHERE item_name = '$edit_item_name'") or die($mysqli->error);
 
-          $item_check = $mysqli->query("SELECT item_id FROM items_table WHERE item_name = '$edit_item_name'") or die($mysqli->error);
-
-          if ($item_check->num_rows > 0) {
+      //     if ($item_check->num_rows > 0) {
             
-            $error_message = "Error: The Item is already registered.";
-            }else{
+      //       $error_message = "Error: The Item is already registered.";
+      //       }else{
             
-             
-              $db_manager->edit_item($edit_item_id,$edit_item_name);
-         
-              
-          }
+            
+      //         $db_manager->edit_item($edit_item_id,$edit_item_name);
         
-      }
+              
+      //     }
+        
+      // }
+      
+      
 			
 			$result=$mysqli->query("SELECT i.item_id,
       i.item_name,
@@ -55,9 +52,9 @@
 
 
         <h3><i class="fa fa-angle-right"></i> Items Preview</h3>
-       
       
- <table id="hidden-table-info" class="table datatable">
+      
+<table id="hidden-table-info" class="table datatable">
                 <thead>
                   <tr>
                     <th>Item ID</th>
@@ -67,7 +64,7 @@
                     <th>Total Deleted</th>
                     <th>Total Remaining Quantity</th>
                     <th>Employee ID</th>
-				        	<th colspan="2">Option</th>					
+                    <th colspan="2">Option</th>					
                   </tr>
                 </thead>
 				
@@ -76,15 +73,15 @@
 					while ($row=$result->fetch_assoc()):	
 				?>
                   <tr class="gradeA">
-                   <td><?php echo $row['item_id'];?></td>
-				          	<td><?php echo $row['item_name'];?></td>
+                  <td><?php echo $row['item_id'];?></td>
+				          	<td data-item-id="<?php echo $row['item_id'];?>"><?php echo $row['item_name'];?></td>
                     <td><?php echo $row['Total_added'];?></td>
                     <td><?php echo $row['Total_deleted'];?></td>
                     <td><?php echo $row['Total_released'];?></td>
                     <td><?php echo $row['Total_quantity'];?></td>
                     <td><?php echo $row['employee_lname'];?></td>
 
-					            <td><button type="button" class="btn btn-round btn-success"  onclick="editData(<?php echo $row['item_id']; ?>, 
+					            <td><button type="button" class="btn btn-round btn-success" onclick="editData(<?php echo $row['item_id']; ?>, 
                       '<?php echo $row['item_name']; ?>')">Edit</button>
 					 <form method="post" action="index_admin.php?page=items_prev" onsubmit="return confirmDelete();">
           <input type="hidden" name="delete_item_id" id="delete_item_id" value="<?php echo $row['item_id']; ?>">
@@ -123,16 +120,14 @@
                   </div>
                 </div>
               </div><!-- End Modal Dialog Scrollable-->
-     
-		
-     <!--script for search -->
-     <script>
+    <!--script for search -->
+    <script>
   $(document).ready(function() {
     $('#hidden-table-info').DataTable();
   });
 </script>
-       
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 
 <script>
@@ -150,7 +145,7 @@
             <?php if (isset($error_message)) : ?>
     <div class="alert alert-danger"><?php echo $error_message; ?></div>
 <?php endif; ?>
-            <h2>Item Information</h2>
+            <h2 id="modal_item_info_title">Item Information</h2>
         </div>
         <div class="modal-body">
         <div class="card">
@@ -163,15 +158,15 @@
               <input type="text" class="form-control" name="edit_item_id" id="edit_item_id" readonly><br>
                 <div class="col-md-12">
                   <div class="form-floating">
-                 
                     <input type="text" class="form-control" id="edit_item_name" name="edit_item_name" placeholder="Your Name" required>
                     <label for="floatingName">Item Name</label>
                   </div>
                 </div>
-               
-             
                 <div class="text-center">
-                  <button name="btn_edit" type="submit" class="btn btn-primary">Update</button>
+                  <!-- <button id="btn_update" name="btn_edit" type="submit" class="btn btn-primary">Update</button> -->
+                  <!-- <button id="btn_update" class="btn btn-primary">Update</button> -->
+                  <input id="btn_update" class="btn btn-primary" type="button" value="Update">
+
                   <button type="reset" class="btn btn-secondary">Reset</button>
                 </div>
               </form><!-- End floating Labels Form -->
@@ -192,7 +187,5 @@
     </div>
 </div>
 <script src="./assets/js/modal.js"></script>
-<script src="./assets/js/edit_item.js"></script>
+<script src="./assets/js/edit_item.js" defer></script>
 
-
- 

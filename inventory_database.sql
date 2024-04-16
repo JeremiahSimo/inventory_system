@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2024 at 01:44 PM
+-- Generation Time: Apr 07, 2024 at 07:53 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1072,10 +1072,9 @@ CREATE TABLE `items_table` (
 --
 
 INSERT INTO `items_table` (`item_id`, `item_name`, `delete_status`, `item_create_timestamp`, `employee_id`) VALUES
-(1015, '50 caliber ammo', 0, '2024-04-08 11:26:34', 1),
+(1015, '50 caliber ammo', 0, '2024-04-03 12:57:02', 1),
 (1016, '45 caliber ammo', 0, '2024-04-03 12:57:39', 1),
-(1017, 'fire molutov', 0, '2024-04-03 13:08:03', 1),
-(1018, 'amphibian tank', 0, '2024-04-07 10:44:42', 1);
+(1017, 'fire molutov', 0, '2024-04-03 13:08:03', 1);
 
 -- --------------------------------------------------------
 
@@ -1089,31 +1088,18 @@ CREATE TABLE `item_logs_timestamp` (
   `item_id` int(11) NOT NULL,
   `logs_status_id` int(11) NOT NULL,
   `item_quantity` int(11) NOT NULL,
-  `employee_id` int(11) NOT NULL,
-  `item_serial_number` int(11) NOT NULL
+  `employee_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `item_logs_timestamp`
 --
 
-INSERT INTO `item_logs_timestamp` (`logs_timestamp_id`, `logs_timestamp`, `item_id`, `logs_status_id`, `item_quantity`, `employee_id`, `item_serial_number`) VALUES
-(1, '2024-04-03 12:59:15', 1015, 1, 10, 1, 0),
-(2, '2024-04-03 12:59:21', 1016, 2, 1, 1, 0),
-(3, '2024-04-10 11:38:21', 1015, 1, 100, 2, 0),
-(4, '2024-04-10 11:38:24', 1015, 1, 1000, 3, 0),
-(5, '2024-04-10 11:38:27', 1015, 1, 1, 2, 0),
-(6, '2024-04-07 09:46:06', 1015, 1, 1, 1, 0),
-(7, '2024-04-07 09:46:09', 1015, 1, 1, 1, 0),
-(8, '2024-04-07 10:33:16', 1015, 3, 1, 1, 0),
-(9, '2024-04-07 09:46:39', 1017, 1, 100, 1, 0),
-(10, '2024-04-07 09:48:46', 1016, 1, 100, 1, 0),
-(11, '2024-04-07 09:57:57', 1017, 1, 11, 1, 0),
-(12, '2024-04-07 10:50:02', 1018, 1, 2, 1, 0),
-(13, '2024-04-07 23:45:18', 1016, 1, 100, 1, 0),
-(14, '2024-04-07 23:49:29', 1015, 1, 50, 1, 1),
-(15, '2024-04-08 00:06:19', 1017, 1, 12, 1, 123123),
-(16, '2024-04-09 01:12:09', 1015, 1, 1, 1, 123);
+INSERT INTO `item_logs_timestamp` (`logs_timestamp_id`, `logs_timestamp`, `item_id`, `logs_status_id`, `item_quantity`, `employee_id`) VALUES
+(1, '2024-04-03 12:59:15', 1015, 1, 10, 1),
+(2, '2024-04-03 12:59:21', 1016, 2, 1, 1),
+(3, '2024-04-03 13:11:30', 1015, 1, 100, 1),
+(4, '2024-04-03 13:17:46', 1015, 1, 1000, 1);
 
 -- --------------------------------------------------------
 
@@ -1133,7 +1119,7 @@ CREATE TABLE `logs_status` (
 INSERT INTO `logs_status` (`log_status_id`, `log_status_name`) VALUES
 (1, 'added'),
 (2, 'delete'),
-(3, 'released');
+(3, 'taken');
 
 -- --------------------------------------------------------
 
@@ -1194,13 +1180,13 @@ ALTER TABLE `employee_list`
 -- AUTO_INCREMENT for table `items_table`
 --
 ALTER TABLE `items_table`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1019;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1018;
 
 --
 -- AUTO_INCREMENT for table `item_logs_timestamp`
 --
 ALTER TABLE `item_logs_timestamp`
-  MODIFY `logs_timestamp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `logs_timestamp_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `logs_status`

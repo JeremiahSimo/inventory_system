@@ -36,7 +36,7 @@
               <h5 class="card-title">Item Registration</h5>
 
               <!-- Floating Labels Form -->
-              <form class="row g-3" method="post" action="index_Admin.php?page=items_reg" id="employeeForm" autocomplete="off">
+              <form class="row g-3" method="post" action="index_Admin.php?page=items_reg" id="employeeForm">
                 <div class="col-md-12">
                   <div class="form-floating">
                     <input type="text" class="form-control" id="floatingName" name="item_name" placeholder="Your Name" required>

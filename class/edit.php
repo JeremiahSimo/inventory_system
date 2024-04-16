@@ -1,10 +1,13 @@
 <?php
+
+// include './include/connection.php';
+
     class edit_data{
 
             public function edit_licenseType($license_code,$License_type){
                 include './include/connection.php';
-                 
-             
+                
+            
                 // Check connection
                 if ($mysqli->connect_error) {
                   die("Connection failed: " . $mysqli->connect_error);
@@ -162,32 +165,34 @@
 
 
   }
-  public function edit_item($edit_item_id,$edit_item_name){
-    include './include/connection.php';
-     
- 
-    // Check connection
-    if ($mysqli->connect_error) {
-      die("Connection failed: " . $mysqli->connect_error);
-    }
+
+
+
+
+  
+//   public function edit_item($edit_item_id,$edit_item_name){
+//     include './include/connection.php';
+//     // Check connection
+//     if ($mysqli->connect_error) {
+//       die("Connection failed: " . $mysqli->connect_error);
+//     }
     
-    else{
+//     else{
 
-        $sql = "UPDATE `items_table` SET `item_name`='$edit_item_name' WHERE item_id=  $edit_item_id";
+//         $sql = "UPDATE `items_table` SET `item_name`='$edit_item_name' WHERE item_id=  $edit_item_id";
 
-    if ($mysqli->query($sql) === TRUE) {
-        echo '<script>alert("record updated successfully");</script>';
-    } else {
-      echo "Error: " . $sql . "<br>" . $mysqli->error;
-    }
+//     if ($mysqli->query($sql) === TRUE) {
+//         echo 'record updated successfully';
+//     } else {
+//       echo "Error: " . $sql . "<br>" . $mysqli->error;
+//     }
   
   
-    }
+//     }
+
+// }
 
 
-
-
-}
 public function edit_driverInfo($edit_driver_id,$edit_driver_fname,$edit_driver_mname,$edit_driver_lname,$edit_driver_license,$edit_driver_address,$edit_driver_expiry,$edit_driver_bday,$edit_driver_height,$edit_driver_gender,$license_code){
   include './include/connection.php';
    
