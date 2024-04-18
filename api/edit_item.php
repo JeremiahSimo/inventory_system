@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $edit_item_id = $postDataArray['item_id'];
     $edit_item_name = $postDataArray['item_name'];
     // echo "console.log(".$edit_item_name.")";
-    
+
     $item_check = $mysqli->query("SELECT item_id FROM items_table WHERE item_name = '$edit_item_name'") or die($mysqli->error);
     if ($item_check->num_rows > 0) {
         // $error_message = "Error: The Item is already registered.";

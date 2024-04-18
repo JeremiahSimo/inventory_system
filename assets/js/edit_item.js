@@ -42,8 +42,6 @@ document.getElementById("myModal")
                     const alertDiv = document.createElement('div');
                     alertDiv.className = 'alert alert-danger';
                     alertDiv.textContent = success.data;
-
-                    const closeModalButton = document.getElementById('closeModal');
                     $(alertDiv).insertAfter('#closeModal');
                     // document.body.appendChild(alertDiv);
                     error = false;
@@ -54,12 +52,11 @@ document.getElementById("myModal")
                     $("#myModal").hide();
                     const div_toRemove = document.getElementsByClassName("alert alert-danger");
                     $(div_toRemove).remove();
-                    $("#" + edit_item_id.value).html(edit_item_name.value);
-                    document.querySelectorAll('.gradeA td').forEach(td => {
-                        const itemId = td.dataset.id;
-                        const itemName = td.dataset.itemName;
-                        console.log(`Item ID: ${itemId}, Item Name: ${itemName}`);
-                    });
+                    // $("#" + edit_item_id.value).html(edit_item_name.value);
+                    // console.log(document.getElementById('#1015'));
+                    // console.log(true);
+                    // $('#'+ edit_item_id.value).html(edit_item_name.value);   
+                    location.reload();
                 }
             })
             .catch(error => {
@@ -68,8 +65,8 @@ document.getElementById("myModal")
             });
     });
 
-    document.addEventListener("DOMContentLoaded", () => {
+    // document.addEventListener("DOMContentLoaded", () => {
         
-    })
+    // })
     
     

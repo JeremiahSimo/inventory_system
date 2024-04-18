@@ -67,14 +67,14 @@
                     <th colspan="2">Option</th>					
                   </tr>
                 </thead>
-				
+                
                 <tbody>
                 <?php
 					while ($row=$result->fetch_assoc()):	
 				?>
                   <tr class="gradeA">
                   <td><?php echo $row['item_id'];?></td>
-				          	<td data-item-id="<?php echo $row['item_id'];?>"><?php echo $row['item_name'];?></td>
+                  <td id="<?php echo $row['item_id'];?>"><?php echo $row['item_name'];?></td>
                     <td><?php echo $row['Total_added'];?></td>
                     <td><?php echo $row['Total_deleted'];?></td>
                     <td><?php echo $row['Total_released'];?></td>
@@ -122,9 +122,9 @@
               </div><!-- End Modal Dialog Scrollable-->
     <!--script for search -->
     <script>
-  $(document).ready(function() {
-    $('#hidden-table-info').DataTable();
-  });
+  // $(document).ready(function() {
+  //   $('#hidden-table-info').DataTable();
+  // });
 </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
