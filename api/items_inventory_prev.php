@@ -6,7 +6,24 @@
         include './class/delete.php';
 
 
-       
+        $item_name = isset($_POST['item_name']) ? $_POST['item_name'] : '';
+        if (isset($_POST['save'])){
+          $employee_id = $_SESSION['employee_id'];
+        $Iname=$_POST['edit_item_name'];
+        
+        $item_check = $mysqli->query("SELECT item_id FROM items_table WHERE item_name = '$Iname'") or die($mysqli->error);
+      
+        if ($item_check->num_rows > 0) {
+                  
+          $error_message = "Error: The Item is already registered.";
+          }else{
+        $mysqli->query("INSERT INTO items_table(item_name,employee_id) VALUES('$Iname','$employee_id')") or die ($mysqli->error);
+        
+        echo '<script>alert("Item Successfully Recorded");</script>';
+        $item_name='';
+            
+        }
+      }
 
         if (isset($_POST['btn_delete'])){
           $db_delete=new soft_delete();
@@ -14,25 +31,7 @@
           $db_delete->delete_item($delete_item_id);
          
         }
-        if (isset($_POST['btn_edit'])){
-          $db_manager=new edit_data();
-          $edit_item_id=$_POST['edit_item_id'];
-          $edit_item_name=$_POST['edit_item_name'];
-
-          $item_check = $mysqli->query("SELECT item_id FROM items_table WHERE item_name = '$edit_item_name' AND delete_status=0") or die($mysqli->error);
-
-          if ($item_check->num_rows > 0) {
-            
-            $error_message = "Error: The Item is already registered.";
-            }else{
-            
-             
-              $db_manager->edit_item($edit_item_id,$edit_item_name);
-         
-              
-          }
-        
-      }
+     
 			
 			$result=$mysqli->query("SELECT i.item_id,
       i.item_name,
@@ -55,7 +54,8 @@
 
 
         <h3><i class="fa fa-angle-right"></i> Items Preview</h3>
-       
+        <button type="button" class="btn btn-round btn-success" id="myBtn">Add New Item
+                      </button>  
       
  <table id="hidden-table-info" class="table datatable">
                 <thead>
@@ -85,7 +85,7 @@
                     <td><?php echo $row['employee_lname'];?></td>
 
 					            <td><button type="button" class="btn btn-round btn-success"  onclick="editData(<?php echo $row['item_id']; ?>, 
-                      '<?php echo $row['item_name']; ?>')">Edit</button>
+                      '<?php echo $row['item_name']; ?>')" >Edit</button>
 					 <form method="post" action="index_admin.php?page=items_prev" onsubmit="return confirmDelete();">
           <input type="hidden" name="delete_item_id" id="delete_item_id" value="<?php echo $row['item_id']; ?>">
 						<button type="submit" name="btn_delete" class="btn btn-danger"  >Delete</button>
@@ -133,7 +133,7 @@
 </script>
        
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
   function confirmDelete() {
@@ -171,8 +171,9 @@
                
              
                 <div class="text-center">
-                  <button name="btn_edit" type="submit" class="btn btn-primary">Update</button>
-                  <button type="reset" class="btn btn-secondary">Reset</button>
+                <input id="btn_update" class="btn btn-primary" type="button" value="Update">
+                <input id="btn_add" class="btn btn-primary" type="button" value="Add">
+                
                 </div>
               </form><!-- End floating Labels Form -->
             </div>
@@ -191,8 +192,27 @@
         </div>
     </div>
 </div>
+<script>
+  // Function to show only the Add button in the modal
+  function showAddButton() {
+    document.getElementById('btn_update').style.display = 'none';
+    document.getElementById('btn_add').style.display = 'block';
+  }
+
+ 
+
+  // When the Add New Item button is clicked
+  document.getElementById('myBtn').addEventListener('click', function() {
+    showAddButton();
+    // Add your other modal logic here
+  });
+ 
+
+  
+</script>
 <script src="./assets/js/modal.js"></script>
 <script src="./assets/js/edit_item.js"></script>
+
 
 
  
