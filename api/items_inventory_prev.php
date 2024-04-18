@@ -6,24 +6,7 @@
         include './class/delete.php';
 
 
-        $item_name = isset($_POST['item_name']) ? $_POST['item_name'] : '';
-        if (isset($_POST['save'])){
-          $employee_id = $_SESSION['employee_id'];
-        $Iname=$_POST['edit_item_name'];
-        
-        $item_check = $mysqli->query("SELECT item_id FROM items_table WHERE item_name = '$Iname'") or die($mysqli->error);
-      
-        if ($item_check->num_rows > 0) {
-                  
-          $error_message = "Error: The Item is already registered.";
-          }else{
-        $mysqli->query("INSERT INTO items_table(item_name,employee_id) VALUES('$Iname','$employee_id')") or die ($mysqli->error);
-        
-        echo '<script>alert("Item Successfully Recorded");</script>';
-        $item_name='';
-            
-        }
-      }
+    
 
         if (isset($_POST['btn_delete'])){
           $db_delete=new soft_delete();
@@ -192,27 +175,10 @@
         </div>
     </div>
 </div>
-<script>
-  // Function to show only the Add button in the modal
-  function showAddButton() {
-    document.getElementById('btn_update').style.display = 'none';
-    document.getElementById('btn_add').style.display = 'block';
-  }
 
- 
-
-  // When the Add New Item button is clicked
-  document.getElementById('myBtn').addEventListener('click', function() {
-    showAddButton();
-    // Add your other modal logic here
-  });
- 
-
-  
-</script>
 <script src="./assets/js/modal.js"></script>
 <script src="./assets/js/edit_item.js"></script>
-
+<script src="./assets/js/add_item.js"></script>
 
 
  
