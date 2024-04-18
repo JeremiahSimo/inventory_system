@@ -19,7 +19,7 @@
           $edit_item_id=$_POST['edit_item_id'];
           $edit_item_name=$_POST['edit_item_name'];
 
-          $item_check = $mysqli->query("SELECT item_id FROM items_table WHERE item_name = '$edit_item_name'") or die($mysqli->error);
+          $item_check = $mysqli->query("SELECT item_id FROM items_table WHERE item_name = '$edit_item_name' AND delete_status=0") or die($mysqli->error);
 
           if ($item_check->num_rows > 0) {
             

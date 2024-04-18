@@ -20,7 +20,7 @@
 	$mysqli->query("INSERT INTO items_table(item_name,employee_id) VALUES('$Iname','$employee_id')") or die ($mysqli->error);
   
 	echo '<script>alert("Item Successfully Recorded");</script>';
-	$Iname='';
+	$item_name='';
 			
 	}
 }
@@ -36,10 +36,10 @@
               <h5 class="card-title">Item Registration</h5>
 
               <!-- Floating Labels Form -->
-              <form class="row g-3" method="post" action="index_Admin.php?page=items_reg" id="employeeForm" autocomplete="off">
+              <form class="row g-3" method="post" action="index_Admin.php?page=items_reg" id="employeeForm" autocomplete="on">
                 <div class="col-md-12">
                   <div class="form-floating">
-                    <input type="text" class="form-control" id="floatingName" name="item_name" placeholder="Your Name" required>
+                    <input type="text" class="form-control" id="floatingName" name="item_name" placeholder="Your Name" value="<?php echo isset($item_name) ? $item_name : ''; ?>" required>
                     <label for="floatingName">Item Name</label>
                   </div>
                 </div>
