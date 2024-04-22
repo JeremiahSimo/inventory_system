@@ -1,8 +1,6 @@
 
 let error = false;
 
-document.getElementById('btn_add').style.display = 'none';
-document.getElementById('btn_update').style.display = 'block';
 
 const edit_item_id = document.getElementById('edit_item_id');
 const edit_item_name = document.getElementById('edit_item_name');
@@ -17,6 +15,10 @@ const edit_item_name = document.getElementById('edit_item_name');
 
         // Open the modal
         document.getElementById("myModal").style.display = "block";
+
+        $(".card-title").text("Item Update");
+        $("#btn_update").show();
+        $("#btn_add").hide();
     }   
 
 

@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 
 include '../include/connection.php';
@@ -14,25 +15,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
     $postDataArray = json_decode($postData, true);
 
     // Check if 'item_id' and 'item_name' exist in the decoded array
-    if (isset($postDataArray['item_id'], $postDataArray['item_name'])) {
+    if (isset($postDataArray['item_name'])) {
         
-    // $db_manager=new edit_data();
-    // $edit_item_id=$_POST['item_id'];
-    // $edit_item_name=$_POST['item_name'];
-    $edit_item_id = $postDataArray['item_id'];
-    $edit_item_name = $postDataArray['item_name'];
-    // echo "console.log(".$edit_item_name.")";
-    
-    $item_check = $mysqli->query("SELECT item_id FROM items_table WHERE item_name = '$edit_item_name'") or die($mysqli->error);
+   
+        $employee_id = $_SESSION['employee_id'];
+    $item_name = $postDataArray['item_name'];
+     //echo "console.log(".$item_name.")";
+     //echo "<script>const employeeId = '" . $employee_id . "';</script>";
+    $item_check = $mysqli->query("SELECT item_id FROM items_table WHERE item_name = '$item_name'") or die($mysqli->error);
     if ($item_check->num_rows > 0) {
         // $error_message = "Error: The Item is already registered.";
         echo "Error: The Item is already registered.";
         
         }else{
-            $sql = "INSERT INTO items_table(item_name,employee_id) VALUES('$Iname','$employee_id')";
+            $sql = "INSERT INTO items_table(item_name,employee_id) VALUES('$item_name','$employee_id')";
         
             if ($mysqli->query($sql) === TRUE) {
-                echo 'Record Updated Successfully';
+                echo 'Item Successfully Registered';
+
             } else {
                 echo "Error: " . $sql . "<br>" . $mysqli->error;
             }

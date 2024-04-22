@@ -1,13 +1,15 @@
 
 	   
 	  <?php
+    
+
 				include './include/connection.php';
         include './class/edit.php';
         include './class/delete.php';
 
 
     
-
+       // $employee_id = $_SESSION['employee_id'];
         if (isset($_POST['btn_delete'])){
           $db_delete=new soft_delete();
           $delete_item_id=$_POST['delete_item_id'];
@@ -37,7 +39,7 @@
 
 
         <h3><i class="fa fa-angle-right"></i> Items Preview</h3>
-        <button type="button" class="btn btn-round btn-success" id="myBtn">Add New Item
+        <button type="button" class="btn btn-round btn-success" id="add_item" onclick="adding_item()">Add New Item
                       </button>  
       
  <table id="hidden-table-info" class="table datatable">
@@ -139,7 +141,7 @@
         <div class="card">
         <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Item Registration</h5>
+              <h5 class="card-title"></h5>
 
               <!-- Floating Labels Form -->
               <form class="row g-3" method="post" action="index_Admin.php?page=items_prev" id="employeeForm">
