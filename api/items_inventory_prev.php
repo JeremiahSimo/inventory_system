@@ -59,7 +59,7 @@
 					while ($row=$result->fetch_assoc()):	
 				?>
                   <tr class="gradeA">
-                   <td><?php echo $row['item_id'];?></td>
+                   <td id =""><?php echo $row['item_id'];?></td>
 				          	<td><?php echo $row['item_name'];?></td>
                     <td><?php echo $row['Total_added'];?></td>
                     <td><?php echo $row['Total_deleted'];?></td>

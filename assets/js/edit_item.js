@@ -54,6 +54,7 @@ document.getElementById("myModal")
                 }
                 else if (success.data === 'Record Updated Successfully') {
                     alert(success.data);
+                    window.location.reload();
                     // Optionally perform additional actions (e.g., refresh data, close modal)
                     $("#myModal").hide();
                     const div_toRemove = document.getElementsByClassName("alert alert-danger");
@@ -63,6 +64,8 @@ document.getElementById("myModal")
                         const itemId = td.dataset.id;
                         const itemName = td.dataset.itemName;
                         console.log(`Item ID: ${itemId}, Item Name: ${itemName}`);
+                       
+                        
                     });
                 }
             })
