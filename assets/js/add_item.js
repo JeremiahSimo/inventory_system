@@ -1,4 +1,9 @@
-function adding_item() {
+function clearModalTextboxes() {
+    document.getElementById('edit_item_name').value = '';
+    document.getElementById('edit_item_id').value = '';
+}
+function adding_item() {        
+    clearModalTextboxes();
     // Display the modal
     document.getElementById("myModal").style.display = "block";
     $(".card-title").text("Item Registration");

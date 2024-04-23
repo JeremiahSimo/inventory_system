@@ -503,7 +503,7 @@ $mysqli->close();
       <li class="nav-heading">Pages</li>
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="users-profile.html">
+        <a class="nav-link collapsed" <?php echo ($_GET['page'] ?? '') === 'user_profile'  ? 'active' : ''; ?> href="index_admin.php?page=user_profile">
           <i class="bi bi-person"></i>
           <span>Profile</span>
         </a>
@@ -602,6 +602,9 @@ $mysqli->close();
                           case 'items_reports':
                             include 'api/items_reports.php';
                             break;
+                            case 'user_profile':
+                              include 'api/users-profile.php';
+                              break;
              
             }
           }
